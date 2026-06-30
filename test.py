@@ -1,56 +1,43 @@
 import os
-import json
 
 password = os.environ.get('PASSWORD')
-api_key = os.environ.get('API_KEY')
 
-def calculate_average(numbers):
-    if not numbers:
+def count_vowels(input_string):
+    if not isinstance(input_string, str):
         return 0
-    return sum(numbers) / len(numbers)
-
-def count_vowels(text):
-    if not text:
-        return 0
-    vowels = "aeiou"
     count = 0
-    for current_char in text:
-        if current_char in vowels:
+    for char in input_string:
+        if char in "aeiou":
             count += 1
     return count
 
-def get_grade(score):
-    if not isinstance(score, (int, float)):
-        return None
-    if score >= 90:
+def get_grade(student_score):
+    if not isinstance(student_score, (int, float)) or student_score < 0 or student_score > 100:
+        return "Invalid score"
+    if student_score >= 90:
         grade = "A"
-    elif score >= 80:
+    elif student_score >= 80:
         grade = "B"
-    elif score >= 70:
-        grade = "C"
     else:
         grade = "F"
     return grade
 
 def read_config(filename):
-    if not filename:
-        return ""
-    with open(filename, "r") as f:
-        content = f.read()
-    return content
+    try:
+        with open(filename, "r") as f:
+            return f.read()
+    except Exception as e:
+        return str(e)
 
-def add_item(item, cart=None):
+def add_item(product, cart=None):
     if cart is None:
         cart = []
-    if not item:
-        return cart
-    cart.append(item)
+    if not isinstance(cart, list):
+        cart = []
+    if not isinstance(product, str):
+        product = str(product)
+    cart.append(product)
     return cart
-
-def first_item(items):
-    if not items:
-        return None
-    return items[0]
 
 print(count_vowels("hello"))
 print(get_grade(95))
