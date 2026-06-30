@@ -13,15 +13,15 @@ def count_vowels(text):
     if not text:
         return 0
     vowels = "aeiou"
-    vowel_count = 0
-    for character in text:
-        if character in vowels:
-            vowel_count += 1
-    return vowel_count
+    count = 0
+    for current_char in text:
+        if current_char in vowels:
+            count += 1
+    return count
 
 def get_grade(score):
-    if score < 0 or score > 100:
-        raise ValueError("Score must be between 0 and 100")
+    if not isinstance(score, (int, float)):
+        return None
     if score >= 90:
         grade = "A"
     elif score >= 80:
@@ -33,20 +33,17 @@ def get_grade(score):
     return grade
 
 def read_config(filename):
-    try:
-        with open(filename, "r") as file:
-            content = file.read()
-            return content
-    except FileNotFoundError:
-        print(f"File {filename} not found")
-        return None
-    except PermissionError:
-        print(f"Permission denied for file {filename}")
-        return None
+    if not filename:
+        return ""
+    with open(filename, "r") as f:
+        content = f.read()
+    return content
 
 def add_item(item, cart=None):
     if cart is None:
         cart = []
+    if not item:
+        return cart
     cart.append(item)
     return cart
 
